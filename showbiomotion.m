@@ -1,4 +1,4 @@
-function showbiomotion()
+function showbiomotion(w, wRect, movieNo)
 % AP Saygin - Simple script for showing biomotion
 % Adapted from bioimage, 2008
 % Adapted for MatlabFun Spring 2010
@@ -14,7 +14,7 @@ InterAnimTime = 1; % how long to wait between animations
 % select which movies to present
 % biovect contains 1:25 movies; 26:50 are mirror images
 % to see subset, e.g. 1:5
-movies = 1:5;
+movies = movieNo:movieNo;
 % to see select movies
 % movies = [4 14 7] ;
 % for all movies
@@ -35,15 +35,16 @@ cleanup;
 dotsize = 7;
 dottype = 2;
 
+% ==== This part is moved to gatherdata.m ===
 % initialize screen
-Screen('CloseAll')
-screenID=max(Screen('Screens'));
+%Screen('CloseAll')
+%screenID=max(Screen('Screens'));
 
 % not whole screen debug mode
-[w,wRect]=Screen(screenID,'OpenWindow',0,[0 0 800 600],[],2);
+%[w,wRect]=Screen(screenID,'OpenWindow',0,[0 0 800 600],[],2);
 % full screen
 % [w,wRect]=Screen(screenID,'OpenWindow',0,[],[],2); 
-
+%=== ===
 [centerx, centery] = RectCenter(wRect);
 textx = wRect(3)-wRect(3)*0.1;
 texty = wRect(4)-wRect(4)*0.1;
@@ -80,6 +81,6 @@ for movie = 1:nchosenmovies % for each movie
 
 end;
 WaitSecs(2);
-Screen('CloseAll');
+%Screen('CloseAll');
 
 
