@@ -1,6 +1,7 @@
-function [ output_args ] = gatherdata()
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+function [ DataStruct ] = gatherdata( words, movieArray )
+%Start the data gethering process. Take the imput of words, and movieArray 
+%from the main function. Returning the output of DataStruct. 
+%   Detailed explanation goes her
 
     %preparing screen
     % initialize screen
@@ -20,7 +21,7 @@ function [ output_args ] = gatherdata()
         Screen('DrawText', w, words{i}, wRect(1), wRect(2), [255, 255, 255]);
         Screen('Flip', w);
         WaitSecs(2);
-        %Get some input 
+        %Get some input (KbCheck)
     end
     %Do something with input
     
