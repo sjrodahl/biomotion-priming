@@ -1,6 +1,11 @@
-function dataStruct = gatherdata()
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+function [ dataStruct ] = gatherdata()
+%Start the data gethering process. Take the imput of words, and movieArray 
+%from the main function. Returning the output of DataStruct. 
+%   Detailed explanation goes her
+    
+    % While we figure out how to hanlde this, test data is here:
+    words = {'arm', 'leg', 'gesf'};
+    movieArray = [1, 2, 3];
 
     %preparing screen
     % initialize screen
@@ -12,8 +17,12 @@ function dataStruct = gatherdata()
     % full screen
     % [w,wRect]=Screen(screenID,'OpenWindow',0,[],[],2); 
 
-    words = {'arm', 'leg', 'gesf'};
-    movieArray = [1, 2, 3];
+    KbName('UnifyKeyNames'); % set keyboard type
+    %clear all;
+    FlushEvents;
+    while KbCheck;
+    end
+    %toWait = 3; % length of time to wait for response
     
     respToNumMap = containers.Map({'z', 'v', 'm'}, [1,2,3]);
     
@@ -36,11 +45,14 @@ function dataStruct = gatherdata()
                 response = KbName(keycode);
                 rt = secs - start_time; %Calculate RT from TrialStartTime
                 FlushEvents;
+                if ~respToNumMap.isKey(response)
+                    Screen('DrawText', w, 'Invalid response. Please try again', wRect(1), wRect(2), [255, 255, 255]);
+                    Screen('Flip', w);
+                    
+                    keyIsDown = 0;
+                end
             end
-            if ~respToNumMap.isKey(response)
-                Screen('DrawText', w, 'Invalid response. Please try again', wRect(1), wRect(2), [255, 255, 255]);
-                keyIsDown = 0;
-            end
+            
         end                
         while KbCheck; end 
         rtArray(i) = rt;
