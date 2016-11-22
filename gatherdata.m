@@ -1,4 +1,4 @@
-function [ output_args ] = gatherdata()
+function dataStruct = gatherdata()
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -14,15 +14,44 @@ function [ output_args ] = gatherdata()
 
     words = {'arm', 'leg', 'gesf'};
     movieArray = [1, 2, 3];
+    
+    respToNumMap = containers.Map({'z', 'v', 'm'}, [1,2,3]);
+    
+    rtArray= zeros(1,length(words));
+    respArray = zeros(1, length(words));
+    
     for i =1:length(words)
         showbiomotion(w, wRect,  movieArray(i));
         %Screen('OpenWindow', w, [0, 0 ,0], wRect);
         Screen('DrawText', w, words{i}, wRect(1), wRect(2), [255, 255, 255]);
         Screen('Flip', w);
-        WaitSecs(2);
-        %Get some input 
+        
+        start_time = GetSecs;
+        FlushEvents; % release all events in the event queue
+        while KbCheck; end
+        keyIsDown = 0;
+        while ~keyIsDown
+            [keyIsDown, secs, keycode] = KbCheck;
+            if keyIsDown % if a key is pressed figure out what it was and when it was
+                response = KbName(keycode);
+                rt = secs - start_time; %Calculate RT from TrialStartTime
+                FlushEvents;
+            end
+            if ~respToNumMap.isKey(response)
+                Screen('DrawText', w, 'Invalid response. Please try again', wRect(1), wRect(2), [255, 255, 255]);
+                keyIsDown = 0;
+            end
+        end                
+        while KbCheck; end 
+        rtArray(i) = rt;
+        responseArray(i) = respToNumMap(response);
     end
+    dataStruct = struct('response', responseArray, 'RT', rtArray);
     %Do something with input
+    %return struct with: RT, response, condition
+    
+    
+    
     
     Screen('Close', w);
 end
