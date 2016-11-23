@@ -14,6 +14,7 @@ function [ dataStruct ] = gatherdata()
 
     % not whole screen debug mode
     [w,wRect]=Screen(screenID,'OpenWindow',0,[0 0 800 600],[],2);
+    Screen('TextSize', w, 16);
     % full screen
     % [w,wRect]=Screen(screenID,'OpenWindow',0,[],[],2); 
 
@@ -24,15 +25,23 @@ function [ dataStruct ] = gatherdata()
     end
     %toWait = 3; % length of time to wait for response
     
-    respToNumMap = containers.Map({'z', 'v', 'm'}, [1,2,3]);
+    respToNumMap = containers.Map({'z', 'm'}, [1,2]);
     
     rtArray= zeros(1,length(words));
     respArray = zeros(1, length(words));
+    intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nPress any key to start';
+    DrawFormattedText(w, intro, 'center', 'center', [255 255 255]);
+    Screen('Flip',w);
+    keyIsDown = 0;
+    while ~keyIsDown
+        keyIsDown = KbCheck;
+    end
     
+    Screen('TextSize', w, 20);
     for i =1:length(words)
         showbiomotion(w, wRect,  movieArray(i));
         %Screen('OpenWindow', w, [0, 0 ,0], wRect);
-        Screen('DrawText', w, words{i}, wRect(1), wRect(2), [255, 255, 255]);
+        DrawFormattedText(w, words{i}, 'center', 'center', [255, 255, 255]);
         Screen('Flip', w);
         
         start_time = GetSecs;
@@ -46,7 +55,7 @@ function [ dataStruct ] = gatherdata()
                 rt = secs - start_time; %Calculate RT from TrialStartTime
                 FlushEvents;
                 if ~respToNumMap.isKey(response)
-                    Screen('DrawText', w, 'Invalid response. Please try again', wRect(1), wRect(2), [255, 255, 255]);
+                    DrawFormattedText(w, 'Invalid response. Please try again', 'center', 'center', [255, 255, 255]);s
                     Screen('Flip', w);
                     
                     keyIsDown = 0;
