@@ -90,6 +90,9 @@ data = gatherdata(words, movieArray);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 accuracy = (data.response & trials(:, 3)') | (~data.response & ~trials(:, 3)');
 result = struct('subjectID', subjectID, 'time', now, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
+
+groupData(result); % group data based on condition and save
+
 filename = sprintf ('test%d', subjectID);
 save(filename, 'result');
 textfilename = sprintf('%s.txt', filename);

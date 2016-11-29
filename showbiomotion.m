@@ -14,7 +14,7 @@ InterAnimTime = 0.5; % how long to wait between animations
 % select which movies to present
 % biovect contains 1:25 movies; 26:50 are mirror images
 % to see subset, e.g. 1:5
-movies = movieNo:movieNo;
+movies = movieNo;
 % to see select movies
 % movies = [4 14 7] ;
 % for all movies
@@ -65,14 +65,14 @@ for movie = 1:nchosenmovies % for each movie
     for i= 1:numframes % each frame
         for dot = 1:numdots % each dot
             % calculate dot position x and y
-            myvectx = vectxc(:,dot,movie);
-            myvecty = vectyc(:,dot,movie);
-            dotposition = [centerx + startxc(dot,movie) + myvectx(i), centery + startyc(dot,movie) + myvecty(i)];
+            myvectx = vectxc(:,dot,movies);
+            myvecty = vectyc(:,dot,movies);
+            dotposition = [centerx + startxc(dot,movies) + myvectx(i), centery + startyc(dot,movies) + myvecty(i)];
             % save this dot in alldots to draw
             alldots(:,dot)=dotposition';
         end;
         Screen('DrawDots', w, alldots, dotsize, fg, [0 0], dottype);
-        Screen('DrawText', w, num2str(movies(movie)), textx, texty, fg);
+        Screen('DrawText', w, num2str(movies), textx, texty, fg);
         Screen('Flip', w);
         Screen('FillRect', w, bg);
         Screen('Flip', w);
