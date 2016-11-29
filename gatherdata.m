@@ -4,8 +4,8 @@ function [ dataStruct ] = gatherdata(words, movieArray)
 %   Detailed explanation goes her
     
     % While we figure out how to hanlde this, test data is here:
-    words = {'arm', 'leg', 'gesf'};
-    movieArray = [1, 2, 3];
+    %words = {'arm', 'leg', 'gesf'};
+    %movieArray = [1, 2, 3];
 
     %preparing screen
     % initialize screen
@@ -25,7 +25,7 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     end
     %toWait = 3; % length of time to wait for response
     
-    respToNumMap = containers.Map({'z', 'm'}, [1,2]);
+    respToNumMap = containers.Map({'z', 'm'}, [1,0]);
     
     rtArray= zeros(1,length(words));
     respArray = zeros(1, length(words));
@@ -42,9 +42,7 @@ function [ dataStruct ] = gatherdata(words, movieArray)
         showbiomotion(w, wRect,  movieArray(i));
         %Screen('OpenWindow', w, [0, 0 ,0], wRect);
         DrawFormattedText(w, words{i}, 'center', 'center', [255, 255, 255]);
-        Screen('Flip', w);
-        
-        start_time = GetSecs;
+        start_time = Screen('Flip', w);
         FlushEvents; % release all events in the event queue
         while KbCheck; end
         keyIsDown = 0;
@@ -53,9 +51,12 @@ function [ dataStruct ] = gatherdata(words, movieArray)
             if keyIsDown % if a key is pressed figure out what it was and when it was
                 response = KbName(keycode);
                 rt = secs - start_time; %Calculate RT from TrialStartTime
+                Screen('FillRect', w, 0);
+                Screen('Flip', w);
                 FlushEvents;
                 if ~respToNumMap.isKey(response)
-                    DrawFormattedText(w, 'Invalid response. Please try again', 'center', 'center', [255, 255, 255]);s
+                    invMsg = sprintf('Invalid response. Please try again.\n%s', words{i});
+                    DrawFormattedText(w, invMsg, 'center', 'center', [255, 255, 255]);
                     Screen('Flip', w);
                     
                     keyIsDown = 0;

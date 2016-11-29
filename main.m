@@ -1,4 +1,6 @@
 
+
+now = datestr(datetime);
 wordArray = {'arm', 'hand';
     'leg', 'knee';
     'fertte', 'klimca'};
@@ -13,14 +15,15 @@ throw = [18 20 21 22 ];
 % 2 = Kick-movie
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%1st column: movie number; 2nd column: word number
+%1st column: movie number; 2nd column: word number; 3rd column: Word (1) or
+%NonWord(2)
 conditions = [
-    1 1;    % Throw - arm
-    1 2;    % Throw - leg
-    1 3;    % Throw - non-word
-    2 1;    % Kick - arm
-    2 2;    % Kick - leg
-    2 3;    % Kick - nonword
+    1 1 1 1;    % Condition 1: Throw - arm
+    1 2 1 2;    % Condition 2: Throw - leg
+    1 3 0 3;    % Condition 3: Throw - non-word
+    2 1 1 4;    % Condition 4: Kick - arm
+    2 2 1 5;    % Condition 5: Kick - leg
+    2 3 0 6;    % Condition 6: Kick - nonword
     ];
 [nCond, c] = size(conditions);
 
@@ -55,8 +58,33 @@ for i=1:nTrials
     end
 end
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Get subject information %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+subjectID = input('Subject ID: ');
+
+handedness = 'n';
+while ~(lower(handedness) == 'r' || lower(handedness) == 'l')
+    handedness = input('Is the subject left or right-handed? l = left, r = right', 's');
+    if ~(lower(handedness) == 'r' || lower(handedness) == 'l')
+        fprintf('Invalid response. Press l or r.\n');
+    end
+    
+end
+
+%%%%%%%%%%%%%%%
+% Gather data %
+%%%%%%%%%%%%%%%
 data = gatherdata(words, movieArray);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Calculate and save results %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+accuracy = (data.response & trials(:, 3)') | (~data.response & ~trials(:, 3)');
+result = struct('subjectID', subjectID, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
+filename = sprintf ('test%d', subjectID);
+save(filename, 'result');
 
 
 

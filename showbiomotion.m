@@ -9,7 +9,7 @@ rand('state', sum(100*clock));
 KbName('UnifyKeyNames');
 fg = 255;
 bg = 0;
-InterAnimTime = 1; % how long to wait between animations
+InterAnimTime = 0.5; % how long to wait between animations
 
 % select which movies to present
 % biovect contains 1:25 movies; 26:50 are mirror images
@@ -54,7 +54,7 @@ Screen('TextColor', w, fg);
 
 for(i=1:2)
     Screen('FillRect', w, bg);
-    Screen('DrawText', w,'Will now play animations',10,30,fg);
+    DrawFormattedText(w,'Will now play animations','center','center',fg);
     Screen('Flip', w);
 end;
 WaitSecs(2);
@@ -80,7 +80,7 @@ for movie = 1:nchosenmovies % for each movie
     WaitSecs(InterAnimTime);
 
 end;
-WaitSecs(2);
+%WaitSecs(2);
 %Screen('CloseAll');
 
 
