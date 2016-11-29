@@ -52,12 +52,12 @@ WaitSecs(1);
 Screen('FillRect', w, bg);
 Screen('TextColor', w, fg);
 
-for(i=1:2)
-    Screen('FillRect', w, bg);
-    DrawFormattedText(w,'Will now play animations','center','center',fg);
-    Screen('Flip', w);
-end;
-WaitSecs(2);
+%for(i=1:2)
+%    Screen('FillRect', w, bg);
+%    DrawFormattedText(w,'Will now play animations','center','center',fg);
+%    Screen('Flip', w);
+%end;
+%WaitSecs(2);
 
 
 for movie = 1:nchosenmovies % for each movie

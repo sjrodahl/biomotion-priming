@@ -55,7 +55,7 @@ function [ dataStruct ] = gatherdata(words, movieArray)
                 Screen('Flip', w);
                 FlushEvents;
                 if ~respToNumMap.isKey(response)
-                    invMsg = sprintf('Invalid response. Please try again.\n%s', words{i});
+                    invMsg = sprintf('Invalid response. Please try again.\n\n%s', words{i});
                     DrawFormattedText(w, invMsg, 'center', 'center', [255, 255, 255]);
                     Screen('Flip', w);
                     

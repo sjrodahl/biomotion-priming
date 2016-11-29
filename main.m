@@ -1,4 +1,12 @@
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Biomotion-action priming                                          %    
+%                                                                   %
+%%%% main.m:                                                        %
+%%%%%%%% Set up the words and corresponding movie in a random order %
+%%%%%%%% Gather subject information                                 %
+%%%%%%%% Calculate the accuracy                                     %
+%%%%%%%% Save the results in a mat and txt file                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 now = datestr(datetime);
 wordArray = {'arm', 'hand';
@@ -66,11 +74,10 @@ subjectID = input('Subject ID: ');
 
 handedness = 'n';
 while ~(lower(handedness) == 'r' || lower(handedness) == 'l')
-    handedness = input('Is the subject left or right-handed? l = left, r = right', 's');
+    handedness = input('Is the subject left or right-handed? l = left, r = right. ', 's');
     if ~(lower(handedness) == 'r' || lower(handedness) == 'l')
         fprintf('Invalid response. Press l or r.\n');
-    end
-    
+    end  
 end
 
 %%%%%%%%%%%%%%%
@@ -85,6 +92,16 @@ accuracy = (data.response & trials(:, 3)') | (~data.response & ~trials(:, 3)');
 result = struct('subjectID', subjectID, 'time', now, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
 filename = sprintf ('test%d', subjectID);
 save(filename, 'result');
-
-
+textfilename = sprintf('%s.txt', filename);
+[fid, msg] = fopen(textfilename, 'w');
+if fid == -1
+   fprintf('Error opening file %s\n%s.', textfilename, msg);
+end
+fprintf(fid, 'SubjectID: %d\nTime: %s\nHandedness: %s\n', subjectID, now, handedness);
+fprintf(fid, 'Condition\tAccuracy\tReaction time\t\n');
+for i = 1:length(accuracy)
+    fprintf(fid, '%d\t%d\t%1.4f\n',trials(i, 4), accuracy(i), data.RT(i));
+    
+end
+fclose(fid);
 
