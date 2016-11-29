@@ -1,4 +1,4 @@
-function [ dataStruct ] = gatherdata()
+function [ dataStruct ] = gatherdata(words, movieArray)
 %Start the data gethering process. Take the imput of words, and movieArray 
 %from the main function. Returning the output of DataStruct. 
 %   Detailed explanation goes her
