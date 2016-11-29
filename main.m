@@ -82,7 +82,7 @@ data = gatherdata(words, movieArray);
 % Calculate and save results %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 accuracy = (data.response & trials(:, 3)') | (~data.response & ~trials(:, 3)');
-result = struct('subjectID', subjectID, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
+result = struct('subjectID', subjectID,, 'time', now, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
 filename = sprintf ('test%d', subjectID);
 save(filename, 'result');
 
