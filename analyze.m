@@ -34,7 +34,8 @@ RTarray = [avg_throwArmRT, avg_throwLegRT, ...
 bar(RTarray);
 set(gca,'XTickLabel',{'Throw-Arm', 'Throw-Leg', 'Throw-Non', ...
     'Kick-Arm', 'Kick-Leg', 'Kick-Non'});
-
+xlabel('Condition');
+ylabel('Reaction Time (seconds)');
 
 
 
