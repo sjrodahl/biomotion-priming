@@ -35,7 +35,7 @@ for n = 1:numTrials
     elseif cond(n) == 2
         tl = tl + 1;
         analysis(i).throwLegRT(tl) = result.data.RT(n);
-        analysis(i).throwLegRT(tl) = result.data.accuracy(n);
+        analysis(i).throwLegAcc(tl) = result.data.accuracy(n);
     % throw non-word condition
     elseif cond(n) == 3
         tn = tn + 1;

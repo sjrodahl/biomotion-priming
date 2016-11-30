@@ -9,9 +9,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 now = datestr(datetime);
-wordArray = {'arm', 'hand';
-    'leg', 'knee';
-    'fertte', 'klimca'};
+wordArray = {'arm', 'hand', 'elbow', 'punch';
+    'leg', 'knee', 'foot', 'toe';
+    'fertte', 'klimca', 'ofekw', 'egws'};
+[groups, nWords] =size(wordArray);
+%Shuffle the columns of wordArray:
+wordArray = wordArray(:, randperm(nWords));
 kick = [9 10 11 23];
 throw = [18 20 21 22 ];
 
@@ -35,6 +38,9 @@ conditions = [
     ];
 [nCond, c] = size(conditions);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Change this to change trial size %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %numTrialsPerCondition * nCond = numTrials
 numTrialsPerCondition = 1;
 
@@ -89,6 +95,7 @@ data = gatherdata(words, movieArray);
 % Calculate and save results %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 accuracy = (data.response & trials(:, 3)') | (~data.response & ~trials(:, 3)');
+
 result = struct('subjectID', subjectID, 'time', now, 'hand', handedness, 'data', struct('conditions', trials(:, 4)', 'accuracy', accuracy, 'RT', data.RT));
 
 groupData(result); % group data based on condition and save
