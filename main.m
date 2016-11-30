@@ -9,12 +9,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 now = datestr(datetime);
-wordArray = {'arm', 'hand', 'elbow', 'punch';
-    'leg', 'knee', 'foot', 'toe';
-    'fertte', 'klimca', 'ofekw', 'egws'};
-[groups, nWords] =size(wordArray);
-%Shuffle the columns of wordArray:
-wordArray = wordArray(:, randperm(nWords));
+wordArray = {'wave', 'punch', 'hold', 'catch', 'push', 'pull', 'shake',...
+    'pat', 'slap', 'knock', 'massage', 'touch', 'clap', 'tap', 'crack',...
+    'grasp', 'lift', 'carry', 'point', 'hug'; % Arm-related words
+    'step', 'lunge', 'squat', 'run', 'march', 'sprint', 'jump', 'climb'...
+    'slide', 'limp', 'stroll', 'walk', 'hop', 'jog', 'kneel', 'bounce',...
+    'pivot', 'stomp', 'stride', 'skate',; %Leg-related words
+    'buphig', 'nigbuv', 'ketbim', 'jadgen', 'kibwum', 'sanibe', 'hopfig',...
+    'wibart', 'dirart', 'cheedle', 'midpum', 'sabvet', 'kipvot',...
+    'faplen', 'mebyib', 'ropgup', 'wumpom', 'fleeber', 'wikter', 'xintab'};
+    % Pseudo-words
 kick = [9 10 11 23];
 throw = [18 20 21 22 ];
 
