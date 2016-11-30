@@ -19,6 +19,11 @@ wordArray = {'wave', 'punch', 'hold', 'catch', 'push', 'pull', 'shake',...
     'wibart', 'dirart', 'cheedle', 'midpum', 'sabvet', 'kipvot',...
     'faplen', 'mebyib', 'ropgup', 'wumpom', 'fleeber', 'wikter', 'xintab'};
     % Pseudo-words
+    
+[r, nWords] = size(wordArray);
+%Shuffle the words:
+wordArray= wordArray(:, randperm(nWords));
+
 kick = [9 10 11 23];
 throw = [18 20 21 22 ];
 
@@ -46,7 +51,7 @@ conditions = [
 % Change this to change trial size %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %numTrialsPerCondition * nCond = numTrials
-numTrialsPerCondition = 1;
+numTrialsPerCondition = 10;
 
 trials = repmat(conditions, numTrialsPerCondition, 1);
 [nTrials, c] = size(trials);
