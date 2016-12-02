@@ -26,9 +26,10 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     %toWait = 3; % length of time to wait for response
     
     respToNumMap = containers.Map({'z', 'm'}, [1,0]);
-    
     rtArray= zeros(1,length(words));
     respArray = zeros(1, length(words));
+    
+    
     intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nPress any key to start';
     DrawFormattedText(w, intro, 'center', 'center', [255 255 255]);
     Screen('Flip',w);
@@ -66,15 +67,10 @@ function [ dataStruct ] = gatherdata(words, movieArray)
         end                
         while KbCheck; end 
         rtArray(i) = rt;
-        responseArray(i) = respToNumMap(response);
+        respArray(i) = respToNumMap(response);
     end
-    dataStruct = struct('response', responseArray, 'RT', rtArray);
-    %Do something with input
-    %return struct with: RT, response, condition
-    
-    
-    
-    
+    dataStruct = struct('response', respArray, 'RT', rtArray);
+   
     Screen('Close', w);
 end
 
