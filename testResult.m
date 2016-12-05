@@ -40,6 +40,20 @@ tnRT = reshape(tnRT,[1,numTrial*2]);
 
 [h3,p3] = ttest(knRT,tnRT);
 
+for i =1:6
+tcomb (i,:) = analysis(i).throwArmRT;
+tcomb2 (i,:) = analysis(i).throwLegRT;
+end
+totcomb = [tcomb;tcomb2];
+totcomb = reshape(totcomb,[1,300]);
+for i =1:6
+kcomb (i,:) = analysis(i).kickArmRT;
+kcomb2 (i,:) = analysis(i).kickLegRT;
+end
+tokcomb = [kcomb;kcomb2];
+tokcomb = reshape(tokcomb,[1,300]);
+[h4,p4]=ttest(totcomb,tokcomb);
+
 disp(['t-test result between kick-leg and throw-leg is ' ...
 num2str(h1)]);
 disp(['p-value is ' num2str(p1)]);
@@ -50,3 +64,7 @@ disp(['p-value is ' num2str(p2)]);
 disp(['t-test result between kick-pseudo and throw-pseudo is ' ...
     num2str(h3) ]);
 disp(['p-value is ' num2str(p3)]);
+
+disp(['t-test result between all kick pairs and all throw pairs is ' ...
+    num2str(h4) ]);
+disp(['p-value is ' num2str(p4)]);
