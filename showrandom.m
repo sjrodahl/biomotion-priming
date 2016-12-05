@@ -58,8 +58,8 @@ for i= 1:numframes % each frame
     end;
 
     Screen('DrawDots', w, alldots, dotsize, fg, [0 0], dottype);
-    Screen('DrawText', w, num2str(movieee(movie)), textx, texty, fg);
-    Screen('DrawText', w, num2str(h), textx-50, texty, fg);
+    %Screen('DrawText', w, num2str(movieee(movie)), textx, texty, fg);
+    %Screen('DrawText', w, num2str(h), textx-50, texty, fg);
     Screen('Flip', w);
     Screen('FillRect', w, bg);
     Screen('Flip', w);

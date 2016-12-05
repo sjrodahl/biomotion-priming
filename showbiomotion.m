@@ -72,7 +72,7 @@ for movie = 1:nchosenmovies % for each movie
             alldots(:,dot)=dotposition';
         end;
         Screen('DrawDots', w, alldots, dotsize, fg, [0 0], dottype);
-        Screen('DrawText', w, num2str(movies), textx, texty, fg);
+        %Screen('DrawText', w, num2str(movies), textx, texty, fg);
         Screen('Flip', w);
         Screen('FillRect', w, bg);
         Screen('Flip', w);
