@@ -111,6 +111,7 @@ set(gca,'XTickLabel',{'Throw-Arm', 'Throw-Leg', 'Throw-Non', ...
     'Kick-Arm', 'Kick-Leg', 'Kick-Non'});
 xlabel('Condition');
 ylabel('Reaction Time (seconds)');
+<<<<<<< Updated upstream
 
 % create array with RT for each overall condition (acc. trials only)
 accRTarray = [avg_matchRT, avg_nonMatchRT, avg_nonWordRT ];
@@ -120,7 +121,3 @@ barOverall = bar(accRTarray);
 set(gca, 'XTickLabel',{'Matching', 'Mis-Matching', 'Non-Word'});
 xlabel('Condition');
 ylabel('Reaction Time (seconds');
-
-
-
-
