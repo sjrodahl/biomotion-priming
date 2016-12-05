@@ -20,8 +20,11 @@ wordArray = {% Arm-related words
     'stand', 'step', 'stomp', 'stride', 'walk'
     % Non-words
     'bounge', 'clight', 'glimb', 'joost', 'jurns', 'kneak', ...
-    'malter', 'marpe', 'nunge', 'prane', 'sceep', ' truat'};
-    
+    'malter', 'marpe', 'nunge', 'prane', 'sceep', ' truat';
+    'brune', 'compy', 'hepel', 'pivine', 'sedun', 'skaver', ...
+    'sline', 'sproll', 'bounge', 'clight', 'glimb', 'joost'};
+        %Replace four last words with new ones if possible, they are
+        %repeated.
 [r, nWords] = size(wordArray);
 
 %Shuffle the words:
@@ -56,7 +59,7 @@ conditions = [
 % Change this to change trial size          %
 % numTrialsPerCondition * nCond = numTrials %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-numTrialsPerCondition = 1;
+numTrialsPerCondition = 25;
 
 trials = repmat(conditions, numTrialsPerCondition, 1);
 [nTrials, c] = size(trials);
@@ -82,7 +85,13 @@ for i=1:nTrials
     end
     wordNumber = trials(i, 2);
     words{i} = wordArray{wordNumber, wordPointer(wordNumber)};
-    wordPointer(wordNumber) = wordPointer(wordNumber) +1 ;
+    wordPointer(wordNumber) = wordPointer(wordNumber) +1;
+    if wordPointer(wordNumber)==nWords
+        %Reset the pointer and shuffle the words
+        wordPointer(wordNumber) = 1;
+        wordArray(wordNumber, :) = wordArray(wordNumber, randperm(nWords));
+        
+    end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
