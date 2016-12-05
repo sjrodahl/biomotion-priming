@@ -35,7 +35,7 @@ respArray = zeros(1, numWords);
 randomProportion = 5;    %On average 5 normal animation for each random
 hitRandom = randperm(numWords, floor(numWords/randomProportion)); % 18 13 9 7
 
-intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nIf you see an animation that does not mimic human motion, press any button.\n\nPress any key to start';
+intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nIf you see an animation that does not mimic human motion,\n\n press any button.\n\nPress any key to start';
 DrawFormattedText(w, intro, 'center', 'center', [255 255 255]);
 Screen('Flip',w);
 keyIsDown = 0;
@@ -48,32 +48,6 @@ for i =1:numWords
     for j = 1:length(hitRandom)
         if i == hitRandom(j)
             showrandombiomotion_TEST(w, wRect);
-            
-            start_time = Screen('Flip', w);
-            FlushEvents; % release all events in the event queue
-            while KbCheck; end
-            keyIsDown = 0;
-            while ~keyIsDown
-                [keyIsDown, secs, keycode] = KbCheck;
-                if keyIsDown % if a key is pressed figure out what it was and when it was
-                    response = KbName(keycode);
-                    rt = secs - start_time; %Calculate RT from TrialStartTime
-                    Screen('FillRect', w, 0);
-                    Screen('Flip', w);
-                    FlushEvents;
-                    if ~respToNumMap.isKey(response)
-                        invMsg = sprintf('Invalid response. Please try again.\n\n%s', words{i});
-                        DrawFormattedText(w, invMsg, 'center', 'center', [255, 255, 255]);
-                        Screen('Flip', w);
-                        
-                        keyIsDown = 0;
-                    end
-                end
-                
-            end
-            while KbCheck; end
-            rtArray(i) = rt;
-            respArray(i) = respToNumMap(response);
         end
     end
     
