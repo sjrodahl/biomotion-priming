@@ -9,6 +9,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 now = datestr(datetime);
+%wordArray: 4x(#words per category)
+%To ensure that #real-words = #nonreal-words, row 1 and 2 are real words, 3
+%and 4 are nonreal.
 wordArray = {'wave', 'punch', 'hold', 'catch', 'push', 'pull', 'shake',...
     'pat', 'slap', 'knock', 'massage', 'touch', 'clap', 'tap', 'crack',...
     'grasp', 'lift', 'carry', 'point', 'hug'; % Arm-related words
@@ -17,10 +20,15 @@ wordArray = {'wave', 'punch', 'hold', 'catch', 'push', 'pull', 'shake',...
     'pivot', 'stomp', 'stride', 'skate',; %Leg-related words
     'buphig', 'nigbuv', 'ketbim', 'jadgen', 'kibwum', 'sanibe', 'hopfig',...
     'wibart', 'dirart', 'cheedle', 'midpum', 'sabvet', 'kipvot',...
-    'faplen', 'mebyib', 'ropgup', 'wumpom', 'fleeber', 'wikter', 'xintab'};
-    % Pseudo-words
+    'faplen', 'mebyib', 'ropgup', 'wumpom', 'fleeber', 'wikter', 'xintab';
+    % non-words
+    'buphig', 'nigbuv', 'ketbim', 'jadgen', 'kibwum', 'sanibe', 'hopfig',...
+    'wibart', 'dirart', 'cheedle', 'midpum', 'sabvet', 'kipvot',...
+    'faplen', 'mebyib', 'ropgup', 'wumpom', 'fleeber', 'wikter', 'xintab'% non-words again
+    };
     
 [r, nWords] = size(wordArray);
+
 %Shuffle the words:
 wordArray= wordArray(:, randperm(nWords));
 
@@ -32,7 +40,7 @@ throw = [18 20 21 22 ];
 % Throw = [18 20 21 22 ]    % 1 = Arm related
 % Kick = [9 10 11 23]       % 2 = Leg related
 % 1 = Throw-movie           % 3 = Non-word
-% 2 = Kick-movie
+% 2 = Kick-movie            % 4 = Non-word
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %1st column: movie number; 2nd column: word number; 3rd column: Word (1) or
@@ -41,17 +49,19 @@ conditions = [
     1 1 1 1;    % Condition 1: Throw - arm
     1 2 1 2;    % Condition 2: Throw - leg
     1 3 0 3;    % Condition 3: Throw - non-word
+    1 4 0 3;    % Repeat cond 3 to get #words = #non-words
     2 1 1 4;    % Condition 4: Kick - arm
     2 2 1 5;    % Condition 5: Kick - leg
     2 3 0 6;    % Condition 6: Kick - nonword
+    2 4 0 6;    % Repeat cond 6 to get #words = #non-words
     ];
 [nCond, c] = size(conditions);
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Change this to change trial size %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%numTrialsPerCondition * nCond = numTrials
-numTrialsPerCondition = 10;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Change this to change trial size          %
+% numTrialsPerCondition * nCond = numTrials %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+numTrialsPerCondition = 1;
 
 trials = repmat(conditions, numTrialsPerCondition, 1);
 [nTrials, c] = size(trials);
@@ -63,22 +73,21 @@ words = cell(nTrials, 1);
 armCounter = 1; legCounter = 1; nonCounter = 1;
 
 movieArray = zeros(nTrials, 1);
+
+%The integers in wordPointers are pointing to the next word to use in the
+%corresponding row in wordArray. 
+%wordPointer = [armCounter, legCounter, nonCounter, nonCounter2]
+wordPointer = ones(1, r);
+
 for i=1:nTrials
     if trials(i,1) == 1 %Throw-movie
         movieArray(i) = throw(randi(length(throw)));
     elseif trials(i, 1) == 2    %Kick-movie
         movieArray(i) = kick(randi(length(kick)));
     end
-    if trials(i, 2) == 1 %Arm-word
-        words{i} = wordArray{1, armCounter};    %Add next arm-word in array
-        armCounter = armCounter + 1;
-    elseif trials(i, 2) == 2 %Leg-word
-        words{i} = wordArray{2, legCounter};    
-        legCounter = legCounter + 1;
-    elseif trials(i, 2) == 3 %Non-word
-        words{i} = wordArray{3, nonCounter};
-        nonCounter = nonCounter + 1;   
-    end
+    wordNumber = trials(i, 2);
+    words{i} = wordArray{wordNumber, wordPointer(wordNumber)};
+    wordPointer(wordNumber) = wordPointer(wordNumber) +1 ;
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%

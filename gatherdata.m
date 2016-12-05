@@ -6,6 +6,8 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     % While we figure out how to hanlde this, test data is here:
     %words = {'arm', 'leg', 'gesf'};
     %movieArray = [1, 2, 3];
+    
+    numWords = length(words);
 
     %preparing screen
     % initialize screen
@@ -26,11 +28,14 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     %toWait = 3; % length of time to wait for response
     
     respToNumMap = containers.Map({'z', 'm'}, [1,0]);
-    rtArray= zeros(1,length(words));
-    respArray = zeros(1, length(words));
+    rtArray= zeros(1,numWords);
+    respArray = zeros(1, numWords);
     
+    %Preparing random biomotion animations
+    randomProportion = 5;    %On average 5 normal animation for each random
+    hitRandom = randperm(numWords, floor(numWords/randomProportion));
     
-    intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nPress any key to start';
+    intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nIf you see an animation that does not mimic human motion, press any button.\n\nPress any key to start';
     DrawFormattedText(w, intro, 'center', 'center', [255 255 255]);
     Screen('Flip',w);
     keyIsDown = 0;
@@ -39,7 +44,11 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     end
     
     Screen('TextSize', w, 20);
-    for i =1:length(words)
+    for i =1:numWords
+        if sum(hitRandom == i)
+           showrandombiomotion(w, wRect); 
+        end
+        
         showbiomotion(w, wRect,  movieArray(i));
         %Screen('OpenWindow', w, [0, 0 ,0], wRect);
         DrawFormattedText(w, words{i}, 'center', 'center', [255, 255, 255]);
