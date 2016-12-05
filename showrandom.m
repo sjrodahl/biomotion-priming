@@ -70,10 +70,12 @@ for i= 1:numframes % each frame
 end;
 while KbCheck; end
 FlushEvents;
-while (~keyPressed) || (GetSecs < startTime+waitTime)
-    keyPressed = KbCheck;
-    if keyPressed 
-        break;
+if ~keyPressed
+    while(GetSecs < startTime+waitTime)
+        keyPressed = KbCheck;
+        if keyPressed 
+            break;
+        end
     end
 end
 if keyPressed 
