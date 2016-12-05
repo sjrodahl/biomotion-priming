@@ -32,7 +32,7 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     respArray = zeros(1, numWords);
     
     %Preparing random biomotion animations
-    randomProportion = 5;    %On average 5 normal animation for each random
+    randomProportion = 1;    %On average 5 normal animation for each random
     hitRandom = randperm(numWords, floor(numWords/randomProportion));
     
     intro = 'You will be presented to an animation followed by a word.\n\nYour task is to decide if the word is real or not.\n\nPress `z` if it is a real word, `m` if its a non-word.\n\nIf you see an animation that does not mimic human motion, press any button.\n\nPress any key to start';
@@ -46,7 +46,7 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     Screen('TextSize', w, 20);
     for i =1:numWords
         if sum(hitRandom == i)
-           showrandombiomotion(w, wRect); 
+           showrandom(w, wRect); 
         end
         
         showbiomotion(w, wRect,  movieArray(i));
