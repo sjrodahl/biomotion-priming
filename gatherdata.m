@@ -15,10 +15,10 @@ function [ dataStruct ] = gatherdata(words, movieArray)
     screenID=max(Screen('Screens'));
 
     % not whole screen debug mode
-    %[w,wRect]=Screen(screenID,'OpenWindow',0,[0 0 800 600],[],2);
+    [w,wRect]=Screen(screenID,'OpenWindow',0,[0 0 800 600],[],2);
     
     % full screen
-    [w,wRect]=Screen(screenID,'OpenWindow',0,[],[],2); 
+    %[w,wRect]=Screen(screenID,'OpenWindow',0,[],[],2); 
     Screen('TextSize', w, 16);
 
     KbName('UnifyKeyNames'); % set keyboard type

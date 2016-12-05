@@ -59,7 +59,7 @@ conditions = [
 % Change this to change trial size          %
 % numTrialsPerCondition * nCond = numTrials %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-numTrialsPerCondition = 25;
+numTrialsPerCondition = 1;
 
 trials = repmat(conditions, numTrialsPerCondition, 1);
 [nTrials, c] = size(trials);
@@ -68,7 +68,6 @@ trials = repmat(conditions, numTrialsPerCondition, 1);
 trials = trials(randperm(nTrials), :);
 
 words = cell(nTrials, 1);
-armCounter = 1; legCounter = 1; nonCounter = 1;
 
 movieArray = zeros(nTrials, 1);
 

@@ -1,0 +1,12 @@
+SubjectID: 7357
+Time: 05-Dec-2016 14:20:20
+Handedness: r
+Condition	Accuracy	Reaction time	
+3	1	1.9016
+4	1	0.6692
+2	1	0.3896
+6	1	0.5295
+3	1	0.7266
+5	1	0.7741
+1	1	0.5505
+6	1	0.5615
