@@ -120,4 +120,4 @@ barOverall = bar(accRTarray);
 set(gca, 'XTickLabel',{'Matching', 'Mis-Matching', 'Non-Word'});
 xlabel('Condition');
 ylabel('Reaction Time (seconds');
-ylim([0 0.8]);
+ylim([0.35 0.75]);
